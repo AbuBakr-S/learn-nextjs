@@ -28,7 +28,7 @@ const UserTable = async ({ sortOrder }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {sortedUsers.map(user => (
+          {sortedUsers?.map(user => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
