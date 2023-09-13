@@ -19,7 +19,9 @@ export default function RootLayout({
     <html data-theme="winter" lang="en">
       <body className={inter.className}>
         <NavBar />
-        <main className='p-5'>{children}</main>
+        <main className='p-5'>
+          {children}
+        </main>
       </body>
     </html>
   )
