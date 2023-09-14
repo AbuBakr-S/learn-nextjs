@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userSchema } from "./schema";
+import prisma from "@/prisma/client";
 
 // Without the request object, Next.js will cache the result of this response
-export const GET = (request: NextRequest) => {
-  return NextResponse.json(
-    [
-      { id: 1, name: 'Abz' },
-      { id: 2, name: 'Waseema' }
-    ]
-  );
+export const GET = async (request: NextRequest) => {
+  // Retrieve all the users from the DB
+  const users = await prisma.user.findMany();
+  return NextResponse.json(users);
 }
 
 export const POST = async (request: NextRequest) => {
@@ -20,6 +18,22 @@ export const POST = async (request: NextRequest) => {
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
-  // ID should be generated
-  return NextResponse.json({ id: 3, name: body.name }, { status: 201 });
+
+  const user = await prisma.user.findUnique({
+    where: { email: body.email }
+  })
+
+  // To prevent duplication, check for an existing user
+  if (user) {
+    return NextResponse.json({ error: 'User already exists' }, { status: 400 });
+  }
+
+  // ID will be generated and other fields have defaults
+  const newUser = await prisma.user.create({
+    data: {
+      name: body.name,
+      email: body.email
+    }
+  })
+  return NextResponse.json(newUser, { status: 201 });
 }

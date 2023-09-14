@@ -23,7 +23,7 @@ export const userSchema = z.object({
   // id: z.number(),
   name: z.string().min(3),
   // username: z.string(),
-  // email: z.string(),
+  email: z.string().email()
   // address: addressSchema,
   // phone: z.string(),
   // website: z.string(),

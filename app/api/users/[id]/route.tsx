@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userSchema } from "../schema";
+import prisma from "@/prisma/client";
 
-export const GET = (request: NextRequest, { params }: { params: { id: number } }) => {
-  // Arbitrary limitation to force 404 scenario
-  if (params.id > 10) {
+export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
+  // Fetch the user with the ID specified in the URL query string
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }
+  })
+  // If the user is not found, we will receive null
+  if (!user) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
-
-  return NextResponse.json({ id: 1, name: 'Abz' });
+  // Return the user object
+  return NextResponse.json(user);
 }
 
 export const PUT = async (request: NextRequest, { params }: { params: { id: number } }) => {

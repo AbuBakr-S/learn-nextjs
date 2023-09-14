@@ -15,3 +15,20 @@ Content-Type: application/json
 ### 
 
 DELETE http://localhost:3000/api/products/1 HTTP/1.1
+
+###
+
+# USER REQUESTS
+GET http://localhost:3000/api/users
+
+###
+
+POST http://localhost:3000/api/users HTTP/1.1
+Host: localhost
+Content-Type: application/json
+Content-Length: 51
+
+{
+    "name": "Abz",
+    "email": "abz@email.com"
+}
