@@ -11,6 +11,7 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">
           <Link href={'/admin'} className="btn btn-ghost normal-case text-sm">Admin</Link>
           <Link href={'/users'} className="btn btn-ghost normal-case text-sm">Users</Link>
+          <Link href={'/api/auth/signin'} className="btn btn-ghost normal-case text-sm">Login</Link>
         </ul>
       </div>
     </div>
