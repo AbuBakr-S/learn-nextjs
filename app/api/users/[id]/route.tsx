@@ -15,7 +15,7 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
   return NextResponse.json(user);
 }
 
-export const PUT = async (request: NextRequest, { params }: { params: { id: number } }) => {
+export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
   // Validate the request body. If invalid, return 400 error
   const body = await request.json();
   // User schema from zod validation for types
@@ -25,25 +25,39 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: numb
   }
 
   // If the ID doesn't exist, return 404 error
-  if (params.id > 10) {
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }
+  })
+  if (!user) {
     return NextResponse.json({ error: 'User not found' }, { status: 400 });
   }
 
   // Otherwise fetch the user with the given ID
+  const updatedUser = await prisma.user.update({
+    where: { id: parseInt(params.id) },
+    data: {
+      name: body.name,
+      email: body.email
+    }
+  })
 
   // Otherwise update the user and return
-  return NextResponse.json({ id: 1, name: body.name });
+  return NextResponse.json(updatedUser);
 }
 
-export const DELETE = (request: NextRequest, { params }: { params: { id: number } }) => {
+export const DELETE = async (request: NextRequest, { params }: { params: { id: string } }) => {
   // Fetch the user from DB
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }
+  })
   // If not found, return 404
-  // Delete the user
-  // Return 200
-
-  if (params.id > 10) {
-    return NextResponse.json({ error: 'User not found' }, { status: 400 });
+  if (!user) {
+    return NextResponse.json({ error: 'User not found' }, { status: 400 })
   }
+  // Delete the user
+  await prisma.user.delete({
+    where: { id: parseInt(params.id) }
+  })
 
   return NextResponse.json({ });
 
