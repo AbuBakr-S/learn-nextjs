@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
+        name: { label: 'Name', type: 'text', placeholder: 'fullname' },
         email: { label: 'Email', type: 'email', placeholder: 'username@email.com' },
         password: { label: "Password", type: "password" }
       },
