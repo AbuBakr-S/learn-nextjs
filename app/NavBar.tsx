@@ -15,8 +15,14 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1 flex">
           <Link href={'/admin'} className="btn btn-ghost normal-case text-sm">Admin</Link>
           <Link href={'/users'} className="btn btn-ghost normal-case text-sm">Users</Link>
+          <Link href={'/products'} className="btn btn-ghost normal-case text-sm">Products</Link>
             {status === 'unauthenticated' && <Link href={'/api/auth/signin'} className="btn btn-ghost normal-case text-sm">Login</Link>}
-            {status === 'authenticated' && <div className='px-4 self-center'>{session.user?.name}</div>}
+            {status === 'authenticated' &&
+              <>
+                <Link className='btn btn-ghost normal-case text-sm' href={'/api/auth/signout'}>Sign Out</Link>
+                <div className='px-4 self-center'>{session.user?.name}</div>
+              </>
+            }
         </ul>
       </div>
     </div>
