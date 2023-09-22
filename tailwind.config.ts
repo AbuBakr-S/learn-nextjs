@@ -13,6 +13,10 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        // use the var function of CSS to read the value of our custom CSS var/property
+        poppins: 'var(--font-poppins)'
+      }
     },
   },
   plugins: [require("daisyui")],

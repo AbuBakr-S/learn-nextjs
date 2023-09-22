@@ -17,7 +17,8 @@ body {
 }
 
 @layer base {
+  /* apply our custom font to every H1 */
   h1 {
-    @apply font-extrabold text-2xl mb-3;
+    @apply font-extrabold text-2xl mb-3 font-poppins;
   }
 }

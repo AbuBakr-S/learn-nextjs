@@ -1,10 +1,18 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+// Custom font
+import localFont from 'next/font/local';
 import NavBar from './NavBar';
 import { AuthProvider } from './auth/Provider';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
+
+const poppins = localFont({
+  src: '../public/fonts/poppins-regular-webfont.woff2',
+  // set a custom CSS property to use our font in tailwind
+  variable: '--font-poppins'
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html data-theme="winter" lang="en">
-      <body className={inter.className}>
+      <body className={poppins.variable}>
         <AuthProvider>
           <NavBar />
           <main className='p-5'>
